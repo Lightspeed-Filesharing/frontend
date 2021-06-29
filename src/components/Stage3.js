@@ -40,16 +40,16 @@ const Stage3 = () => {
                 payload: [hexName, encryptedData, nonce]
             });
             setLoadingText('Uploading your file...')
-            // formData.append('filename', hexName)
-            // formData.append('data', encryptedData);
-            // formData.append('nonce', nonce);
+            formData.append('filename', hexName)
+            formData.append('data', encryptedData);
+            formData.append('nonce', nonce);
 
-            // const response = await fetch(`${process.env.REACT_APP_API}/upload`, {
-            //     method: 'POST',
-            //     body: formData,
-            // });
+            const response = await fetch(`${process.env.REACT_APP_API}/upload`, {
+                method: 'POST',
+                body: formData,
+            });
 
-            // console.log(response)
+            console.log(response)
         }
         reader.readAsBinaryString(files[0])
         console.log(files[0])
