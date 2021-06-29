@@ -46,42 +46,32 @@ const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
             keys = sodiumKey;
         }
         console.log(keys)
-        // console.log("name output:")
-        // console.log(await toHexString(nameOutput))
         const reader = new FileReader();
         reader.onload = async function(e) {
             var data = e.target.result;
-            // await console.log(data)
-            // to be continued...    
             const output = await encrypt(sodium, data, keys);
-            const formData = new FormData();
+            var formData = new FormData();
             const nameOutput = await encrypt(sodium, files[0].name, keys, output[1]);
-            // console.log(nameOutput[0])
-            const hexName = nameOutput[0];
+            const hexName = await toHexString(nameOutput[0]);
             
             const encryptedData = output[0];
             console.log(encryptedData)
-            const nonce = output[1];
-            // console.log(`Hex Name: ${hexName}\nEncrypted Data: ${encryptedData}\nNonce: ${nonce}`)
+            const nonce = await toHexString(output[1]);
             formData.append('filename', hexName)
-            formData.append('file', encryptedData);
+            formData.append('data', encryptedData);
             formData.append('nonce', nonce);
+                
+            const response = await fetch(`${process.env.REACT_APP_API}/upload`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            console.log(response)
         }
         reader.readAsBinaryString(files[0])
         console.log(files[0])
     }
 
-    // const uploadFile = async (fileArray) => {
-    //     var data = {};
-    //     data.filename = 
-    //     await axios.post(`${process.env.REACT_APP_API}/upload`, {
-    //         data
-    //     }, {
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         }
-    //     })
-    // }
 
     return (
         <>
