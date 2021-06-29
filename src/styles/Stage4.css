@@ -20,4 +20,14 @@
 
 .center.stage4 {
     margin-top: 1.5rem;
+    text-align: center;
+}
+
+.input.stage4 {
+    margin-top: 2rem;
+}
+
+.buttons.stage4 {
+    display: flex;
+    justify-content: center;
 }

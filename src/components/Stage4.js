@@ -1,11 +1,22 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import styles from '../styles/Stage2.css';
 import moreStyles from '../styles/Stage4.css';
+import {Context} from '../states/store';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 
 const Stage4 = () => {
+    const [state, dispatch] = useContext(Context);
+
+    const [fullURL, setFullURL] = useState(null);
+
+    useEffect(() => {
+        console.log(state.response)
+        setFullURL(`https://file.lightspeed.blue/${state.response.fileUuid}#${state.password}${state.salt}`)
+    }, [])
+
     return (
         <div className="bottom stage4">
             <div className="bottom-child">
@@ -20,6 +31,12 @@ const Stage4 = () => {
                 <div className="center stage4">
                     <p className="direction" style={{textAlign: 'center'}}>Your file is ready to be securely shared.</p>
                     <p className="direction small">Copy your link below.</p>
+                    <input className="input stage4" disabled={true} value={fullURL}/>
+                    <div className="buttons stage4">
+                        <CopyToClipboard text={fullURL}>
+                            <button className="button create">Copy To Clipboard</button>
+                        </CopyToClipboard>
+                    </div>
                 </div>
             </div>
         </div>

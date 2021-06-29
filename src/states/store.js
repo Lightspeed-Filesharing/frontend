@@ -10,6 +10,9 @@ const initialState = {
     options: null,
     settings: null,
     stage: 1,
+    response: null,
+    password: null,
+    salt: null,
     error: null
 };
 

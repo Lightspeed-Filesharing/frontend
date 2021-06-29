@@ -31,6 +31,21 @@ const Reducer = (state, action) => {
                 ...state,
                 stage: action.payload
             }
+        case 'SET_PASSWORD':
+            return {
+                ...state,
+                password: action.payload
+            }
+        case 'SET_SALT':
+            return {
+                ...state,
+                salt: action.payload
+            }
+        case 'SET_RESPONSE':
+            return {
+                ...state,
+                response: action.payload
+            }
         default:
             return state;
     }

@@ -11,7 +11,7 @@ export const createKeys = async (sodium) => { // Creates cryptography keys deriv
 
     const key = await sodium.crypto_pwhash(32, password, salt, sodium.CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE, sodium.CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE);
     console.log("Keys generated.");
-    return key;
+    return [key, password, plainSalt];
 }
 
 export const encrypt = async (sodium, unencryptedData, key, nonce=null) => { // Encrypts data using the keys and a randomly generated nonce.

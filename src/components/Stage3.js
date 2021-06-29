@@ -11,13 +11,17 @@ const Stage3 = () => {
 
     const [loadingText, setLoadingText] = useState('End-to-end encrypting your file...');
 
-    const [webWorker, setWebWorker] = useState(null);
+    // const [webWorker, setWebWorker] = useState(null);
 
     const uploadFile = async (files) => {
         let keys;
         if (!state.key) {
             console.log("No key detected. Creating one now.")
             keys = await createKeys(state.sodium);
+            console.log(keys)
+            dispatch({type: "SET_PASSWORD", payload: keys[1]});
+            dispatch({type: "SET_SALT", payload: keys[2]})
+            keys = keys[0];
             dispatch({type: "SET_KEY", payload: keys});
         } else {
             keys = state.key;
@@ -52,7 +56,9 @@ const Stage3 = () => {
 
             console.log(response)
             if (response.status === 200) {
-                dispatch({type: "SET_STAGE", payload: 4})
+                const responseJSON = await response.json();
+                dispatch({type: "SET_RESPONSE", payload: responseJSON.data});
+                dispatch({type: "SET_STAGE", payload: 4});
             } else {
                 console.error(response);
                 return;
