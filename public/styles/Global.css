@@ -1,0 +1,26 @@
+html, body, .App, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+}
+
+h1, h2, h3, h4 {
+    font-family: Rubik;
+}
+
+h1 {
+    font-weight: 400;
+}
+
+.titles {
+    margin-left: 1rem;
+    padding-top: .5rem;
+}
+
+@font-face {
+    font-family: Rubik;
+    src: url('/assets/font/Rubik/Rubik-VariableFont_wght.ttf');
+    /* font-weight: 700; */
+}

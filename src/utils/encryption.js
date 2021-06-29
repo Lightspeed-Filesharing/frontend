@@ -1,0 +1,23 @@
+import {generatePassword} from './generation';
+
+export const createKeys = async (sodium) => { // Creates cryptography keys derived from a randomly generated password and salt.
+    let password = await generatePassword(16);
+    let plainSalt = await generatePassword(16);
+    let salt = new TextEncoder().encode(plainSalt);
+    console.log(`Password: ${password}\nSalt: ${plainSalt}`)
+
+    const key = await sodium.crypto_pwhash(32, password, salt, sodium.CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE, sodium.CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE);
+    console.log("Keys generated.");
+    return key;
+}
+
+export const encrypt = async (sodium, unencryptedData, key, nonce) => { // Encrypts data using the keys and a randomly generated nonce.
+    const nonce = await sodium.randombytes_buf(24);
+    let ciphertext = toHexString(await sodium.crypto_secretbox(unencryptedData, nonce, key));
+    return [ciphertext, nonce];
+}
+
+export const decrypt = async (sodium, encryptedData, nonce, key) => { // Decrypts encrypted data using a provided nonce.
+    let decrypted = await sodium.crypto_secretbox_open(await fromHexString(encryptedData), nonce, key);
+    return decrypted.toString('utf8');
+}
