@@ -1,5 +1,8 @@
+
+import { toHexString, fromHexString } from './conversion';
 import {generatePassword} from './generation';
 
+const {SodiumPlus} = require('sodium-plus');
 export const createKeys = async (sodium) => { // Creates cryptography keys derived from a randomly generated password and salt.
     let password = await generatePassword(16);
     let plainSalt = await generatePassword(16);
@@ -11,13 +14,16 @@ export const createKeys = async (sodium) => { // Creates cryptography keys deriv
     return key;
 }
 
-export const encrypt = async (sodium, unencryptedData, key, nonce) => { // Encrypts data using the keys and a randomly generated nonce.
-    const nonce = await sodium.randombytes_buf(24);
-    let ciphertext = toHexString(await sodium.crypto_secretbox(unencryptedData, nonce, key));
+export const encrypt = async (sodium, unencryptedData, key, nonce=null) => { // Encrypts data using the keys and a randomly generated nonce.
+    if (!nonce) {
+        nonce = await sodium.randombytes_buf(24);
+    }
+    
+    let ciphertext = await sodium.crypto_secretbox(unencryptedData, nonce, key);
     return [ciphertext, nonce];
 }
 
 export const decrypt = async (sodium, encryptedData, nonce, key) => { // Decrypts encrypted data using a provided nonce.
-    let decrypted = await sodium.crypto_secretbox_open(await fromHexString(encryptedData), nonce, key);
+    let decrypted = await sodium.crypto_secretbox_open(encryptedData, nonce, key);
     return decrypted.toString('utf8');
 }

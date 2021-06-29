@@ -1,15 +1,30 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import { FileDrop } from 'react-file-drop';
+import { toHexString, fromHexString } from '../utils/conversion';
 
 // Styles
 import '../styles/Landing.css';
+import { createKeys, encrypt } from '../utils/encryption';
+const BJSON = require('buffer-json')
 
+const {SodiumPlus} = require('sodium-plus');
 const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
+    const [sodium, setSodium] = useState(null);
+    const [sodiumKey, setKey] = useState(null);
+
     const [slideText, setSlideText] = useState('secure');
 
     useEffect(() => {
+        const initEncryption = async () => {
+            const sodium = await SodiumPlus.auto();
+            setSodium(sodium);
+        }
+
+        initEncryption();
+  
         console.log("Beep")
+  
         const cycle = ['secure', 'private', 'reliable', 'speedy'];
         var cycleIndex = 0;
         setInterval(function () {
@@ -20,6 +35,41 @@ const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
             cycleIndex += 1;
         }, 5000)
     }, []);
+
+    const handleFile = async (files) => {
+        console.log(sodium)
+        let keys;
+        if (!sodiumKey) {
+            keys = await createKeys(sodium);
+            setKey(keys);
+        } else {
+            keys = sodiumKey;
+        }
+        console.log(keys)
+        // console.log("name output:")
+        // console.log(await toHexString(nameOutput))
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+            var data = e.target.result;
+            // await console.log(data)
+            // to be continued...    
+            const output = await encrypt(sodium, data, keys);
+            const formData = new FormData();
+            const nameOutput = await encrypt(sodium, files[0].name, keys, output[1]);
+            // console.log(nameOutput[0])
+            const hexName = nameOutput[0];
+            
+            const encryptedData = output[0];
+            console.log(encryptedData)
+            const nonce = output[1];
+            // console.log(`Hex Name: ${hexName}\nEncrypted Data: ${encryptedData}\nNonce: ${nonce}`)
+            formData.append('filename', hexName)
+            formData.append('file', encryptedData);
+            formData.append('nonce', nonce);
+        }
+        reader.readAsBinaryString(files[0])
+        console.log(files[0])
+    }
 
     // const uploadFile = async (fileArray) => {
     //     var data = {};
@@ -45,7 +95,11 @@ const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
                                 <h2 className="subtitle dropzone">Your files will be secured with<br></br>end-to-end encryption.</h2>
                             </div>
                         </div>
-                        <FileDrop onDrop={(files, event) => console.log('onDrop!', files, event)} className="bottom">
+                        <FileDrop 
+                        onDrop={async (files) => {handleFile(files)}}
+                        // onDrop={(files, event) => console.log('onDrop!', files, event)} 
+                        className="bottom"
+                        >
                             <div class="center">
                                 <div className="icongroup">
                                     <div className="circle">
