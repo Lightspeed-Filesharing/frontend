@@ -4,6 +4,7 @@ import {Context} from '../states/store';
 import Stage1 from '../components/Stage1';
 import Stage2 from '../components/Stage2';
 import Stage3 from '../components/Stage3';
+import Stage4 from '../components/Stage4';
 
 // Styles
 import '../styles/Landing.css';
@@ -51,6 +52,7 @@ const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
                         {state.stage === 1 && <Stage1 />}
                         {state.stage === 2 && <Stage2 />}
                         {state.stage === 3 && <Stage3 />}
+                        {state.stage === 4 && <Stage4 />}
                     </div>
                 </div>
                 <div className="emptyright">

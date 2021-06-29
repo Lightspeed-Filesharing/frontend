@@ -72,22 +72,6 @@
     align-items: center;
 }
 
-.circle {
-    height: 5rem;
-    width: 5rem;
-    border-radius: 50%;
-    background: #3737FF;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition-duration: .3s;
-}
-
-.circle:hover {
-    cursor: pointer;
-    background: #5555ff;
-}
-
 .plus {
     color: white;
     font-size: 3rem;

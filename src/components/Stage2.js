@@ -64,7 +64,7 @@ const Stage2 = () => {
             </div>
             <div className="bottom stage2">
                 <div className="buttons bottom stage2">
-                    <button className="button cancel" onClick={() => {dispatch({type: "SET_FILES", payload: null})}}>Cancel</button>
+                    <button className="button cancel" onClick={() => {dispatch({type: "SET_STAGE", payload: 1}); dispatch({type: "SET_FILES", payload: null})}}>Cancel</button>
                     <button className="button create" onClick={handleCreate}>Create Lightspeed Link</button>
                 </div>
             </div>

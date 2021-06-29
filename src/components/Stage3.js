@@ -43,6 +43,7 @@ const Stage3 = () => {
             formData.append('filename', hexName)
             formData.append('data', encryptedData);
             formData.append('nonce', nonce);
+            // formData.append('settings', state.settings)
 
             const response = await fetch(`${process.env.REACT_APP_API}/upload`, {
                 method: 'POST',
@@ -50,6 +51,13 @@ const Stage3 = () => {
             });
 
             console.log(response)
+            if (response.status === 200) {
+                dispatch({type: "SET_STAGE", payload: 4})
+            } else {
+                console.error(response);
+                return;
+            }
+
         }
         reader.readAsBinaryString(files[0])
         console.log(files[0])
