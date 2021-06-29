@@ -1,3 +1,23 @@
 .circle.stage4 {
-    background: #4cf10b;
+    background: #17eb3a;
+}
+
+.circle.stage4:hover {
+    cursor: auto;
+}
+
+.bottom.stage4 {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title.stage4 {
+    text-align: center;
+}
+
+.center.stage4 {
+    margin-top: 1.5rem;
 }
