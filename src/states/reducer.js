@@ -21,11 +21,16 @@ const Reducer = (state, action) => {
                 ...state,
                 encryptedData: action.payload
             };
-        // case '':
-        //     return {
-        //         ...state,
-        //         files: action.payload
-        //     };
+        case 'SET_OPTIONS':
+            return {
+                ...state,
+                settings: action.payload
+            };
+        case 'SET_STAGE':
+            return {
+                ...state,
+                stage: action.payload
+            }
         default:
             return state;
     }

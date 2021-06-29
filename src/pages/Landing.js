@@ -1,14 +1,12 @@
 import axios from 'axios';
 import React, {useEffect, useState,useContext} from 'react';
-import { toHexString, fromHexString } from '../utils/conversion';
 import {Context} from '../states/store';
 import Stage1 from '../components/Stage1';
 import Stage2 from '../components/Stage2';
+import Stage3 from '../components/Stage3';
 
 // Styles
 import '../styles/Landing.css';
-import { createKeys, encrypt } from '../utils/encryption';
-const BJSON = require('buffer-json')
 
 const {SodiumPlus} = require('sodium-plus');
 const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
@@ -37,42 +35,6 @@ const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
         }, 5000)
     }, []);
 
-    const uploadFile = async (files) => {
-        let keys;
-        if (!state.key) {
-            keys = await createKeys(state.sodium);
-            dispatch({type: "SET_KEY", payload: keys});
-        } else {
-            keys = state.key;
-        }
-        console.log(keys)
-        const reader = new FileReader();
-        reader.onload = async function(e) {
-            var data = e.target.result;
-            const output = await encrypt(state.sodium, data, keys);
-            var formData = new FormData();
-            const nameOutput = await encrypt(state.sodium, files[0].name, keys, output[1]);
-            const hexName = await toHexString(nameOutput[0]);
-            
-            const encryptedData = output[0];
-            console.log(encryptedData)
-            const nonce = await toHexString(output[1]);
-            dispatch({type: "SET_ENCRYPTEDDATA", payload: [hexName, encryptedData, nonce]});
-            // formData.append('filename', hexName)
-            // formData.append('data', encryptedData);
-            // formData.append('nonce', nonce);
-                
-            // const response = await fetch(`${process.env.REACT_APP_API}/upload`, {
-            //     method: 'POST',
-            //     body: formData,
-            // });
-
-            // console.log(response)
-        }
-        reader.readAsBinaryString(files[0])
-        console.log(files[0])
-    }
-
 
     return (
         <>
@@ -86,8 +48,9 @@ const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
                                 <h2 className="subtitle dropzone">Your files will be secured with<br></br>end-to-end encryption.</h2>
                             </div>
                         </div>
-                        {!state.files && <Stage1 />}
-                        {state.files && <Stage2 />}
+                        {state.stage === 1 && <Stage1 />}
+                        {state.stage === 2 && <Stage2 />}
+                        {state.stage === 3 && <Stage3 />}
                     </div>
                 </div>
                 <div className="emptyright">

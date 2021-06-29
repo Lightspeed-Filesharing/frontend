@@ -8,6 +8,7 @@ const Stage1 = () => {
     const handleFile = async (files) => {
         console.log(files)
         dispatch({type: "SET_FILES", payload: files});
+        dispatch({type: 'SET_STAGE', payload: 2})
     }
     
     return (

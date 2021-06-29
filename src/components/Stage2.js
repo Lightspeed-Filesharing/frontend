@@ -2,9 +2,20 @@ import React, {useState, useContext} from 'react';
 import {Context} from '../states/store';
 import styles from '../styles/Stage2.css';
 
-const Stage1 = () => {
+const Stage2 = () => {
     const [state, dispatch] = useContext(Context);
-        
+    const localOptions = {
+        longLink: false,
+        deleteOnOpen: false,
+        limitDownloads: null
+    };
+
+    const handleCreate = () => {
+        dispatch({type: "SET_OPTIONS", payload: localOptions});
+        dispatch({type: 'SET_STAGE', payload: 3})
+    }
+
+
     return (
         <div className="bottom stage2">
             <div className="titles stage2">
@@ -18,16 +29,37 @@ const Stage1 = () => {
                 </div>
                 <hr />
                 <div className="options-child check">
+                    <input className="checkbox" type="checkbox" onChange={(e) => {
+                        if (e.target.checked === true) {
+                            localOptions.longLink = true;
+                            return;
+                        }
+
+                        localOptions.longLink = false;
+                    }}></input>
                     <p className="direction stage2">Long Link</p>
-                    <input className="checkbox" type="checkbox"></input>
                 </div>
                 <div className="options-child check">
+                    <input className="checkbox" type="checkbox" onChange={(e) => {
+                        if (e.target.checked === true) {
+                            localOptions.deleteOnOpen = true;
+                            return;
+                        }
+
+                        localOptions.deleteOnOpen = false;
+                    }}></input>
                     <p className="direction stage2">Delete On Open</p>
-                    <input className="checkbox" type="checkbox"></input>
                 </div>
                 <div className="options-child check">
+                    <input className="checkbox" type="checkbox" onChange={(e) => {
+                        if (e.target.checked === true) {
+                            localOptions.limitDownloads = true;
+                            return;
+                        }
+
+                        localOptions.limitDownloads = null;
+                    }}></input>
                     <p className="direction stage2">Limit Downloads</p>
-                    <input className="checkbox" type="checkbox"></input>
                 </div>
             </div>
             <div className="bottom stage2">
@@ -41,4 +73,4 @@ const Stage1 = () => {
     )
 }
 
-export default Stage1;
+export default Stage2;

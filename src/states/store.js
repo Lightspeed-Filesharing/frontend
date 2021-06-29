@@ -7,6 +7,9 @@ const initialState = {
     sodium: null,
     key: null,
     encryptedData: [],
+    options: null,
+    settings: null,
+    stage: 1,
     error: null
 };
 
