@@ -1,7 +1,9 @@
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
-import { FileDrop } from 'react-file-drop';
+import React, {useEffect, useState,useContext} from 'react';
 import { toHexString, fromHexString } from '../utils/conversion';
+import {Context} from '../states/store';
+import Stage1 from '../components/Stage1';
+import Stage2 from '../components/Stage2';
 
 // Styles
 import '../styles/Landing.css';
@@ -10,15 +12,14 @@ const BJSON = require('buffer-json')
 
 const {SodiumPlus} = require('sodium-plus');
 const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
-    const [sodium, setSodium] = useState(null);
-    const [sodiumKey, setKey] = useState(null);
+    const [state, dispatch] = useContext(Context);
 
     const [slideText, setSlideText] = useState('secure');
 
     useEffect(() => {
         const initEncryption = async () => {
             const sodium = await SodiumPlus.auto();
-            setSodium(sodium);
+            dispatch({type: "SET_SODIUM", payload: sodium});
         }
 
         initEncryption();
@@ -36,37 +37,37 @@ const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
         }, 5000)
     }, []);
 
-    const handleFile = async (files) => {
-        console.log(sodium)
+    const uploadFile = async (files) => {
         let keys;
-        if (!sodiumKey) {
-            keys = await createKeys(sodium);
-            setKey(keys);
+        if (!state.key) {
+            keys = await createKeys(state.sodium);
+            dispatch({type: "SET_KEY", payload: keys});
         } else {
-            keys = sodiumKey;
+            keys = state.key;
         }
         console.log(keys)
         const reader = new FileReader();
         reader.onload = async function(e) {
             var data = e.target.result;
-            const output = await encrypt(sodium, data, keys);
+            const output = await encrypt(state.sodium, data, keys);
             var formData = new FormData();
-            const nameOutput = await encrypt(sodium, files[0].name, keys, output[1]);
+            const nameOutput = await encrypt(state.sodium, files[0].name, keys, output[1]);
             const hexName = await toHexString(nameOutput[0]);
             
             const encryptedData = output[0];
             console.log(encryptedData)
             const nonce = await toHexString(output[1]);
-            formData.append('filename', hexName)
-            formData.append('data', encryptedData);
-            formData.append('nonce', nonce);
+            dispatch({type: "SET_ENCRYPTEDDATA", payload: [hexName, encryptedData, nonce]});
+            // formData.append('filename', hexName)
+            // formData.append('data', encryptedData);
+            // formData.append('nonce', nonce);
                 
-            const response = await fetch(`${process.env.REACT_APP_API}/upload`, {
-                method: 'POST',
-                body: formData,
-            });
+            // const response = await fetch(`${process.env.REACT_APP_API}/upload`, {
+            //     method: 'POST',
+            //     body: formData,
+            // });
 
-            console.log(response)
+            // console.log(response)
         }
         reader.readAsBinaryString(files[0])
         console.log(files[0])
@@ -85,23 +86,8 @@ const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
                                 <h2 className="subtitle dropzone">Your files will be secured with<br></br>end-to-end encryption.</h2>
                             </div>
                         </div>
-                        <FileDrop 
-                        onDrop={async (files) => {handleFile(files)}}
-                        // onDrop={(files, event) => console.log('onDrop!', files, event)} 
-                        className="bottom"
-                        >
-                            <div class="center">
-                                <div className="icongroup">
-                                    <div className="circle">
-                                        <p className="plus">+</p>
-                                    </div>
-                                </div>
-                                <div className="textgroup">
-                                    <p className="direction">Drag and drop or click to select.</p>
-                                    <p className="direction small">Max Size: 100 MB</p>
-                                </div>
-                            </div>
-                        </FileDrop>
+                        {!state.files && <Stage1 />}
+                        {state.files && <Stage2 />}
                     </div>
                 </div>
                 <div className="emptyright">

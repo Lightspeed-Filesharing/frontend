@@ -1,0 +1,26 @@
+.bottom.stage2 {
+    display: inline-block;
+}
+
+.options {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.options-child {
+    margin-bottom: 1rem;
+    width: 90%;
+}
+
+.direction.stage2 {
+    margin-bottom: .5rem;
+    /* margin-top: .5rem; */
+}
+
+.options-child.check {
+    display: flex;
+    flex-direction: row;
+}

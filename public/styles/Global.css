@@ -14,6 +14,12 @@ h1 {
     font-weight: 400;
 }
 
+hr {
+    color: black;
+    width: 90%;
+    border: 1px solid rgb(153, 153, 153);
+}
+
 .titles {
     margin-left: 1rem;
     padding-top: .5rem;
@@ -23,4 +29,34 @@ h1 {
     font-family: Rubik;
     src: url('/assets/font/Rubik/Rubik-VariableFont_wght.ttf');
     /* font-weight: 700; */
+}
+
+.input {
+    width: 90%;
+    height: 2.5rem;
+    background: none;
+    /* border: none; */
+    border: 2px rgb(110, 110, 110) solid;
+    border-radius: 10px;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    font-size: 1rem;
+}
+
+.checkbox {
+    width: 1.25rem;
+    height: 1.25rem;
+    appearance: none;
+    border: 2px solid rgb(110, 110, 110);
+    border-radius: 5px;
+}
+
+.checkbox:hover {
+    background-color: rgb(199, 199, 199);
+    cursor: pointer;
+}
+
+.checkbox:checked {
+    background-color: rgb(55, 55, 255);
+    border: 0px solid black;
 }
