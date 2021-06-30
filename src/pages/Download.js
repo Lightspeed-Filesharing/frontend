@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-import {useParams} from "react-router-dom";
+import {useParams, useHistory} from "react-router-dom";
 
 import axios from 'axios';
 
@@ -8,16 +8,31 @@ import styles from '../styles/Download.css';
 
 import wave from '../wave.svg';
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
+
 const Download = () => {
+    const history = useHistory();
 
     const [keySalt, setKeySalt] = useState(null);
     const [metadata, setMetadata] = useState(null);
+
+    const [err, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [errorMessageSub, setErrorMessageSub] = useState(null);
 
     const splat = useParams();
     useEffect(() => {
         var a = window.location.href;
         var localKeySalt = a.split('#')[1];
         setKeySalt(localKeySalt);
+
+        if (!localKeySalt || localKeySalt.length < 1) {
+            setError(true);
+            setErrorMessage('Invalid decryption keys.');
+            setErrorMessageSub('The encrypted file could not be decrypted.');
+            return;
+        }
 
         const fetchData = async () => {
             const uuid = splat.uuid;
@@ -31,8 +46,18 @@ const Download = () => {
                 setMetadata(metadataJSON);
                 // console.log(dataResponse.data)
                 // console.log(dataJSON)
+            } else if (metadata.status === 404) {
+                console.error("File not found.");
+                setError(true);
+                setErrorMessage('File not found.');
+                setErrorMessageSub('The requested file doesn\'t exist.');
+                return;
             } else {
-                console.error("File not found.")
+                console.error("Unknown error.");
+                setError(true);
+                setErrorMessage('An unknown error occured.');
+                setErrorMessageSub('That\'s all we know at this time.');
+                return;
             }
 
         }
@@ -44,7 +69,23 @@ const Download = () => {
         <>
             <div className="overlay">
                 <div className="overlay-child">
-                    
+                    {err === true &&
+                        <div className="center">
+                            <div className="center-child">
+
+                                <div className="circle error">
+                                    <FontAwesomeIcon icon={faTimes} size="2x" color="white" />
+                                </div>
+                                <div className="titles error">
+                                    <p className="direction error">{errorMessage}</p>
+                                    <p className="direction small">{errorMessageSub}</p>
+                                </div>
+                                <div className="buttons error">
+                                    <button className="button create error" onClick={() => {history.push('/')}}>Go Back Home</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
             <div className="top"></div>

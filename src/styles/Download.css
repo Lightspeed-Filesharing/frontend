@@ -1,6 +1,7 @@
 body {
     display: flex;
     flex-direction: row;
+    background-color: #e0e0e0;
 }
 
 .top {
@@ -36,7 +37,39 @@ body {
     width: 40rem;
     height: 50rem;
     border-radius: 10px;
-    box-shadow: 10px 10px 5px 0px rgba(114, 114, 114, 0.75);
+    /* box-shadow: 10px 10px 5px 0px rgba(114, 114, 114, 0.75);
     -webkit-box-shadow: 10px 10px 5px 0px rgba(114, 114, 114, 0.75);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(114, 114, 114, 0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(114, 114, 114, 0.75); */
+}
+
+.circle.error {
+    height: 6rem;
+    width: 6rem;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titles.error {
+    text-align: center;
+}
+
+.button.create.error {
+    width: 10rem;
 }

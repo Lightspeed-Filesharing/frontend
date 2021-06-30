@@ -114,3 +114,16 @@ hr {
     cursor: pointer;
     background: #5555ff;
 }
+
+.direction {
+    margin-bottom: 0;
+    margin-top: .25rem;
+    font-family: Rubik;
+}
+
+.direction.small {
+    font-size: .9rem;
+    color: grey;
+    text-align: center;
+    margin-top: 0;
+}
