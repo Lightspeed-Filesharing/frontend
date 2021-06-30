@@ -100,3 +100,40 @@
 .titles.slide {
     text-align: center;
 }
+
+@media only screen and (max-width: 800px) {
+    .wrapper {
+        flex-direction: column-reverse;
+    }
+
+    .dropzone-parent {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .titles.slide {
+        margin: 0;
+    }
+
+    .emptyright {
+        height: 10%;
+        margin: 0;
+        display: none;
+    }
+
+    .title.slide {
+        margin:0;
+    }
+
+    .dropzone {
+        width: 100%;
+        height: 100%;
+    }
+
+    .top {
+        border-radius: 0;
+    }
+}
