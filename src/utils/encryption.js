@@ -17,7 +17,7 @@ export const deriveKeys = async (sodium, password, plainSalt) => {
     let salt = new TextEncoder().encode(plainSalt);
     console.log(`Password: ${password}\nSalt: ${plainSalt}`)
 
-    const key = await sodium.crypto_pwhash(32, password, salt, sodium.CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE, sodium.CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE);
+    const key = await sodium.crypto_pwhash(32, password, salt, 2, 67108864);
     console.log("Keys generated.");
     return [key, password, plainSalt];
 

@@ -50,8 +50,7 @@ const Download = () => {
             setUuid(uuid);
             
             const metadata = await axios.get(`${process.env.REACT_APP_API}/files/${uuid}`);
-            // var dataResponse = await axios.get(`${process.env.REACT_APP_API}/files/${uuid}?data=true`);
-            // dataResponse = dataResponse.data
+
             if (metadata.status === 200) {
                 const metadataJSON = JSON.parse(metadata.request.response).data;
                 console.log(metadataJSON);
