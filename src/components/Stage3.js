@@ -38,12 +38,14 @@ const Stage3 = () => {
             const hexName = await toHexString(nameOutput[0]);
 
             const msgOutput = await encrypt(state.sodium, state.message, keys, output[1]);
-            const encryptedMsg = msgOutput[0];
+            const hexMsg = await toHexString(msgOutput[0]);
+
+            const typeOutput = await encrypt(state.sodium, files[0].type, keys, output[1]);
+            const hexType = await toHexString(typeOutput[0]);
 
             const encryptedData = output[0];
             console.log(encryptedData)
-            // Decryption using Buffer.from() works.
-            // await decrypt(state.sodium, encryptedData, output[1], keys)
+
             const nonce = await toHexString(output[1]);
             dispatch({
                 type: "SET_ENCRYPTEDDATA",
@@ -54,18 +56,15 @@ const Stage3 = () => {
             formData.append('filename', hexName)
             formData.append('data', new Blob([encryptedData], { type: "application/octet-stream"}));
             formData.append('nonce', nonce);
-            formData.append('message', encryptedMsg)
-            formData.append('longLink', state.settings.longLink)
-            formData.append('deleteOnOpen', state.settings.deleteOnOpen)
-            formData.append('limitDownloads', state.settings.limitDownloads)
-            // console.log(formData.entries())
-            for(var pair of formData.entries()) {
-                console.log(typeof pair[1]);
-             }             
+            formData.append('message', hexMsg);
+            formData.append('type', hexType);
+            formData.append('longLink', state.settings.longLink);
+            formData.append('deleteOnOpen', state.settings.deleteOnOpen);
+            formData.append('limitDownloads', state.settings.limitDownloads);
+
             const response = await fetch(`${process.env.REACT_APP_API}/upload`, {
                 method: 'POST',
                 body: formData,
-                // headers: { "Content-Type": "multipart/form-data" },
             });
 
             console.log(response)

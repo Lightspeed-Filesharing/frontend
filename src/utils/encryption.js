@@ -32,7 +32,11 @@ export const encrypt = async (sodium, unencryptedData, key, nonce=null) => { // 
     return [ciphertext, nonce];
 }
 
-export const decrypt = async (sodium, encryptedData, nonce, key) => { // Decrypts encrypted data using a provided nonce.
+export const decrypt = async (sodium, encryptedData, nonce, key, disableStringification=false) => { // Decrypts encrypted data using a provided nonce.
     let decrypted = await sodium.crypto_secretbox_open(encryptedData, nonce, key);
-    return decrypted.toString('utf8');
+    if (!disableStringification) {
+        return decrypted.toString('utf8');
+    }
+
+    return decrypted;
 }

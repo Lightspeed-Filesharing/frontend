@@ -14,7 +14,7 @@ const Stage4 = () => {
 
     useEffect(() => {
         console.log(state.response)
-        setFullURL(`https://file.lightspeed.blue/${state.response.fileUuid}#${state.password}${state.salt}`)
+        setFullURL(`${window.origin}/${state.response.fileUuid}#${state.password}${state.salt}`)
     }, [])
 
     return (

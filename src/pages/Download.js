@@ -98,11 +98,22 @@ const Download = () => {
     const handleDecrypt = async () => {
         const filedata = await axios.get(`${process.env.REACT_APP_API}/files/${globalUuid}?data=true`);
         const binary = filedata.data;
-        console.log(typeof binary)
-        console.log(binary)
-        console.log(sodiumKeys)
+
         const bufferNonce = await fromHexString(metadata.nonce);
-        console.log(await decrypt(sodium, binary, bufferNonce, sodiumKeys));
+        const decrypted =  await decrypt(sodium, binary, bufferNonce, sodiumKeys, true);
+
+        const blob = new Blob([decrypted], {
+            type: "image/png;charset=utf-8"
+        });
+        var a = document.createElement("a");
+        document.body.appendChild(a);
+        a.style = "display: none";
+    
+        var url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = decryptedName;
+        a.click();
+        window.URL.revokeObjectURL(url);
     }
 
     return (
