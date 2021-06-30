@@ -1,12 +1,18 @@
-html, body, .App, #root {
+html,
+body,
+.App,
+#root {
     height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow: auto; 
+    overflow: auto;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     font-family: Rubik;
 }
 
@@ -22,7 +28,7 @@ hr {
 
 .titles {
     margin-left: 1rem;
-    padding-top: .5rem;
+    padding-top: 0.5rem;
 }
 
 @font-face {
@@ -38,8 +44,8 @@ hr {
     /* border: none; */
     border: 2px rgb(110, 110, 110) solid;
     border-radius: 10px;
-    padding-left: .5rem;
-    padding-right: .5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
     font-size: 1rem;
 }
 
@@ -58,7 +64,7 @@ hr {
 
 .checkbox:checked {
     background-color: rgb(55, 55, 255);
-    border: 0px solid black;
+    border: 0 solid black;
 }
 
 .checkbox:active {
@@ -83,7 +89,7 @@ hr {
     font-size: 1rem;
     border-radius: 5px;
     color: rgb(68, 68, 68);
-    transition-duration: .25s;
+    transition-duration: 0.25s;
 }
 
 .button.cancel:hover {
@@ -96,7 +102,7 @@ hr {
     font-size: 1rem;
     border-radius: 5px;
     color: rgb(218, 218, 218);
-    transition-duration: .25s;
+    transition-duration: 0.25s;
 }
 
 .button.create:hover {
@@ -111,7 +117,7 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition-duration: .3s;
+    transition-duration: 0.3s;
     user-select: none;
 }
 
@@ -122,13 +128,31 @@ hr {
 
 .direction {
     margin-bottom: 0;
-    margin-top: .25rem;
+    margin-top: 0.25rem;
     font-family: Rubik;
 }
 
 .direction.small {
-    font-size: .9rem;
+    font-size: 0.9rem;
     color: grey;
     text-align: center;
     margin-top: 0;
+}
+
+a {
+    text-decoration: none;
+    text-decoration-color: none;
+    color: black;
+}
+
+.link {
+    transition-duration: .25s;
+}
+
+.link:hover {
+    color: rgb(61, 61, 61);
+}
+
+.link:active {
+    color: rgb(65, 65, 65);
 }

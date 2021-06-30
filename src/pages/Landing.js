@@ -6,6 +6,10 @@ import Stage2 from '../components/Stage2';
 import Stage3 from '../components/Stage3';
 import Stage4 from '../components/Stage4';
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCode, faUserCircle} from '@fortawesome/free-solid-svg-icons';
+
+
 // Styles
 import '../styles/Landing.css';
 
@@ -56,9 +60,15 @@ const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
                     </div>
                 </div>
                 <div className="emptyright">
-                    <div className="titles slide">
-                        <h1 className="title slide">Welcome to <span className="blue">Lightspeed</span>.</h1>
-                        <h2 className="subtitle slide">Your <span className="blue">{slideText}</span> file-sharing companion.</h2>
+                    <div className="center">
+                        <div className="titles slide">
+                            <h1 className="title slide">Welcome to <span className="blue">Lightspeed</span>.</h1>
+                            <h2 className="subtitle slide">Your <span className="blue">{slideText}</span> file-sharing companion.</h2>
+                        </div>
+                        <div className="icongroup">
+                            <a className="link" href="https://github.com/Lightspeed-Filesharing" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faCode} size="2x" /></a>
+                            <a className="link" href="https://httpjames.space" target="_blank"><FontAwesomeIcon icon={faUserCircle} size="2x" /></a>
+                        </div>
                     </div>
                 </div>
             </div>

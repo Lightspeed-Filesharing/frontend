@@ -141,3 +141,8 @@
         border-radius: 0;
     }
 }
+
+.icongroup {
+    display: flex;
+    justify-content: space-evenly;
+}
