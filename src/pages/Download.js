@@ -26,6 +26,7 @@ const Download = () => {
     const [sodium, setSodium] = useState(null);
     const [sodiumKeys, setKeys] = useState(null);
     const [decryptedName, setName] = useState(null);
+    const [decryptedType, setType] = useState(null);
 
     const [err, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -75,7 +76,9 @@ const Download = () => {
                 setKeys(derivedOutput[0]);
                 const bufferName = await fromHexString(metadataJSON.filename);
                 const bufferNonce = await fromHexString(metadataJSON.nonce);
-                setName(await decrypt(sodiumEngine, bufferName, bufferNonce, derivedOutput[0]))
+                const bufferType = await fromHexString(metadataJSON.type);
+                setName(await decrypt(sodiumEngine, bufferName, bufferNonce, derivedOutput[0]));
+                setType(await decrypt(sodiumEngine, bufferType, bufferNonce, derivedOutput[0]));
             } else if (metadata.status === 404) {
                 console.error("File not found.");
                 setError(true);
@@ -103,7 +106,7 @@ const Download = () => {
         const decrypted =  await decrypt(sodium, binary, bufferNonce, sodiumKeys, true);
 
         const blob = new Blob([decrypted], {
-            type: "image/png;charset=utf-8"
+            type: decryptedType
         });
         var a = document.createElement("a");
         document.body.appendChild(a);
