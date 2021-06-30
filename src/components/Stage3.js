@@ -5,12 +5,14 @@ import {createKeys, decrypt, encrypt} from '../utils/encryption';
 import { toHexString, fromHexString } from '../utils/conversion';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import axios from 'axios';
 
 const Stage3 = () => {
     const [state, dispatch] = useContext(Context);
 
     const [loadingText, setLoadingText] = useState('End-to-end encrypting your file...');
+
+    const [err, setError] = useState(false);
+    const [errmsg, setErrorMessage] = useState(null);
 
     // const [webWorker, setWebWorker] = useState(null);
 
@@ -62,17 +64,26 @@ const Stage3 = () => {
             formData.append('deleteOnOpen', state.settings.deleteOnOpen);
             formData.append('limitDownloads', state.settings.limitDownloads);
 
-            const response = await fetch(`${process.env.REACT_APP_API}/upload`, {
-                method: 'POST',
-                body: formData,
-            });
+            var response;
+
+            try {
+                response = await fetch(`${process.env.REACT_APP_API}/upload`, {
+                    method: 'POST',
+                    body: formData,
+                });
+            } catch (err) {
+                setError(true);
+                return;
+            }
 
             console.log(response)
+            const responseJSON = await response.json();
             if (response.status === 200) {
-                const responseJSON = await response.json();
                 dispatch({type: "SET_RESPONSE", payload: responseJSON.data});
                 dispatch({type: "SET_STAGE", payload: 4});
             } else {
+                setError(true);
+                setErrorMessage(responseJSON.message);
                 console.error(response);
                 return;
             }
@@ -86,7 +97,7 @@ const Stage3 = () => {
         const init = async () => {
             await uploadFile(state.files);
         }
-        // setWebWorker(new Worker(init))
+
         init()
     }, [])
 

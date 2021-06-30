@@ -49,8 +49,19 @@ const Download = () => {
         const fetchData = async () => {
             const uuid = splat.uuid;
             setUuid(uuid);
-            
-            const metadata = await axios.get(`${process.env.REACT_APP_API}/files/${uuid}`);
+           
+            var metadata;
+
+            try {
+                metadata = await axios.get(`${process.env.REACT_APP_API}/files/${uuid}`);
+            } catch (err) {
+                setError(true);
+                setErrorMessage("File not found.");
+                setErrorMessageSub("Are you sure you typed the URL correctly?");
+                return;
+            }
+
+            console.log(metadata.status)
 
             if (metadata.status === 200) {
                 const metadataJSON = JSON.parse(metadata.request.response).data;
@@ -100,7 +111,7 @@ const Download = () => {
                 return;
             }
 
-        }
+        } 
 
         fetchData();
     }, []);
