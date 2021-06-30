@@ -19,6 +19,8 @@ const {SodiumPlus} = require('sodium-plus');
 const Download = () => {
     const history = useHistory();
 
+    const [globalUuid, setUuid] = useState(null);
+
     const [keySalt, setKeySalt] = useState(null);
     const [metadata, setMetadata] = useState(null);
     const [sodium, setSodium] = useState(null);
@@ -44,6 +46,7 @@ const Download = () => {
 
         const fetchData = async () => {
             const uuid = splat.uuid;
+            setUuid(uuid);
             
             const metadata = await axios.get(`${process.env.REACT_APP_API}/files/${uuid}`);
             // var dataResponse = await axios.get(`${process.env.REACT_APP_API}/files/${uuid}?data=true`);
@@ -92,6 +95,16 @@ const Download = () => {
         fetchData();
     }, []);
 
+    const handleDecrypt = async () => {
+        const filedata = await axios.get(`${process.env.REACT_APP_API}/files/${globalUuid}?data=true`);
+        const binary = filedata.data;
+        console.log(typeof binary)
+        console.log(binary)
+        console.log(sodiumKeys)
+        const bufferNonce = await fromHexString(metadata.nonce);
+        console.log(await decrypt(sodium, binary, bufferNonce, sodiumKeys));
+    }
+
     return (
         <>
             <div className="overlay">
@@ -109,7 +122,7 @@ const Download = () => {
                                     </div>
                                     <div className="buttons error">
                                         <button className="button create decrypt" 
-                                        // onClick={}
+                                        onClick={async () => {handleDecrypt()}}
                                         >Decrypt and Download</button>
                                     </div>
                                 </div>

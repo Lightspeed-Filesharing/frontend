@@ -1,10 +1,11 @@
 import React, {useState, useContext, useLayoutEffect} from 'react';
 import {Context} from '../states/store';
 import styles from '../styles/Landing.css';
-import {createKeys, encrypt} from '../utils/encryption';
+import {createKeys, decrypt, encrypt} from '../utils/encryption';
 import { toHexString, fromHexString } from '../utils/conversion';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import axios from 'axios';
 
 const Stage3 = () => {
     const [state, dispatch] = useContext(Context);
@@ -41,23 +42,30 @@ const Stage3 = () => {
 
             const encryptedData = output[0];
             console.log(encryptedData)
+            // Decryption using Buffer.from() works.
+            // await decrypt(state.sodium, encryptedData, output[1], keys)
             const nonce = await toHexString(output[1]);
             dispatch({
                 type: "SET_ENCRYPTEDDATA",
                 payload: [hexName, encryptedData, nonce]
             });
             setLoadingText('Uploading your file...')
+            console.log(typeof encryptedData)
             formData.append('filename', hexName)
-            formData.append('data', encryptedData);
+            formData.append('data', new Blob([encryptedData], { type: "application/octet-stream"}));
             formData.append('nonce', nonce);
             formData.append('message', encryptedMsg)
             formData.append('longLink', state.settings.longLink)
             formData.append('deleteOnOpen', state.settings.deleteOnOpen)
             formData.append('limitDownloads', state.settings.limitDownloads)
-
+            // console.log(formData.entries())
+            for(var pair of formData.entries()) {
+                console.log(typeof pair[1]);
+             }             
             const response = await fetch(`${process.env.REACT_APP_API}/upload`, {
                 method: 'POST',
                 body: formData,
+                // headers: { "Content-Type": "multipart/form-data" },
             });
 
             console.log(response)
