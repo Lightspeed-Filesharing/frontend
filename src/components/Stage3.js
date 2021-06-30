@@ -61,9 +61,9 @@ const Stage3 = () => {
             formData.append('nonce', nonce);
             formData.append('message', hexMsg);
             formData.append('type', hexType);
-            formData.append('longLink', state.settings.longLink);
-            formData.append('deleteOnOpen', state.settings.deleteOnOpen);
-            formData.append('limitDownloads', state.settings.limitDownloads);
+            formData.append('longLink', state.longLink);
+            formData.append('deleteOnOpen', state.deleteOnOpen);
+            formData.append('limitDownloads', state.limitDownloads);
 
             var response;
 

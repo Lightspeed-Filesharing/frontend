@@ -38,7 +38,10 @@ const Download = () => {
 
     const [showLoader, setShowLoader] = useState(true);
 
+    const [decryptedFile, setDecryptedFile] = useState(null);
+
     const splat = useParams();
+
     useEffect(() => {
         var a = window.location.href;
         var localKeySalt = a.split('#')[1];
@@ -120,11 +123,25 @@ const Download = () => {
     }, []);
 
     const handleDecrypt = async () => {
-        const filedata = await axios.get(`${process.env.REACT_APP_API}/files/${globalUuid}?data=true`);
-        const binary = filedata.data;
+        var filedata
+        var binary
+        var bufferNonce;
+        
+        if (!decryptedFile) {
+            filedata = await axios.get(`${process.env.REACT_APP_API}/files/${globalUuid}?data=true`);
+            binary = filedata.data;
+            bufferNonce = await fromHexString(metadata.nonce);
+        }
 
-        const bufferNonce = await fromHexString(metadata.nonce);
-        const decrypted =  await decrypt(sodium, binary, bufferNonce, sodiumKeys, true);
+        var decrypted;
+        console.log(decrypted)
+
+        if (!decryptedFile) {
+            decrypted =  await decrypt(sodium, binary, bufferNonce, sodiumKeys, true);
+            setDecryptedFile(decrypted);
+        } else {
+            decrypted = decryptedFile;
+        }
 
         const blob = new Blob([decrypted], {
             type: decryptedType
@@ -157,6 +174,13 @@ const Download = () => {
                     {!err && !showLoader &&
                         <div className="center">
                                 <div className="center-child">
+                                {metadata.settings.deleteOnOpen === "true" &&
+                                    <div className="warning">
+                                        <div className="warningtext">
+                                            <p className="direction warning">This file will no longer be accessible after you close this tab.</p>
+                                        </div>
+                                    </div>
+                                }
 
                                     <div className="circle file">
                                         <FontAwesomeIcon icon={faFile} size="2x" color="white" />

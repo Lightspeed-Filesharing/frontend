@@ -7,14 +7,8 @@ const Stage2 = () => {
 
     const [message, setMessage] = useState('');
 
-    const localOptions = {
-        longLink: false,
-        deleteOnOpen: false,
-        limitDownloads: null
-    };
 
     const handleCreate = () => {
-        dispatch({type: "SET_OPTIONS", payload: localOptions});
         dispatch({type: 'SET_STAGE', payload: 3});
         dispatch({type: "SET_MESSAGE", payload: message})
     }
@@ -35,33 +29,33 @@ const Stage2 = () => {
                 <div className="options-child check">
                     <input className="checkbox" type="checkbox" onChange={(e) => {
                         if (e.target.checked === true) {
-                            localOptions.longLink = true;
+                            dispatch({type: "SET_LONGLINK", payload: true})
                             return;
                         }
 
-                        localOptions.longLink = false;
+                        dispatch({type: "SET_LONGLINK", payload: false})
                     }}></input>
                     <p className="direction stage2">Long Link</p>
                 </div>
                 <div className="options-child check">
                     <input className="checkbox" type="checkbox" onChange={(e) => {
                         if (e.target.checked === true) {
-                            localOptions.deleteOnOpen = true;
+                            dispatch({type: "SET_DELETEONOPEN", payload: true})
                             return;
                         }
 
-                        localOptions.deleteOnOpen = false;
+                        dispatch({type: "SET_DELETEONOPEN", payload: false})
                     }}></input>
                     <p className="direction stage2">Delete On Open</p>
                 </div>
                 <div className="options-child check" style={{marginBottom: 0}}>
                     <input className="checkbox" type="checkbox" onChange={(e) => {
                         if (e.target.checked === true) {
-                            localOptions.limitDownloads = true;
+                            dispatch({type: "SET_LIMITDOWNLOADS", payload: true})
                             return;
                         }
 
-                        localOptions.limitDownloads = null;
+                        dispatch({type: "SET_LIMITDOWNLOADS", payload: null})
                     }}></input>
                     <p className="direction stage2">Limit Downloads</p>
                 </div>

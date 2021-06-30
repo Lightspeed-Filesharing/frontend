@@ -14,6 +14,9 @@ const initialState = {
     password: null,
     salt: null,
     message: null,
+    longLink: false,
+    deleteOnOpen: false,
+    limitDownloads: null,
     error: null
 };
 
