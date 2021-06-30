@@ -14,6 +14,9 @@ import {deriveKeys, decrypt} from "../utils/encryption";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTimes, faFile} from '@fortawesome/free-solid-svg-icons';
 
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+
 const {SodiumPlus} = require('sodium-plus');
 
 const Download = () => {
@@ -32,6 +35,8 @@ const Download = () => {
     const [err, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const [errorMessageSub, setErrorMessageSub] = useState(null);
+
+    const [showLoader, setShowLoader] = useState(true);
 
     const splat = useParams();
     useEffect(() => {
@@ -56,6 +61,7 @@ const Download = () => {
                 metadata = await axios.get(`${process.env.REACT_APP_API}/files/${uuid}`);
             } catch (err) {
                 setError(true);
+                setShowLoader(false);
                 setErrorMessage("File not found.");
                 setErrorMessageSub("Are you sure you typed the URL correctly?");
                 return;
@@ -79,6 +85,7 @@ const Download = () => {
                 try {
                     derivedOutput = await deriveKeys(sodiumEngine, password, plainSalt);
                 } catch(err) {
+                    setShowLoader(false);
                     setError(true);
                     setErrorMessage('Invalid decryption keys.');
                     setErrorMessageSub('The encrypted file could not be decrypted.');        
@@ -97,12 +104,8 @@ const Download = () => {
                 } else {
                     setMessage(false);
                 }
-            } else if (metadata.status === 404) {
-                console.error("File not found.");
-                setError(true);
-                setErrorMessage('File not found.');
-                setErrorMessageSub('The requested file doesn\'t exist.');
-                return;
+                setShowLoader(false);
+
             } else {
                 console.error("Unknown error.");
                 setError(true);
@@ -141,7 +144,17 @@ const Download = () => {
         <>
             <div className="overlay">
                 <div className="overlay-child">
-                    {err !== true &&
+                    {showLoader === true &&
+                    <div className="center">
+                        <Loader
+                            type="Oval"
+                            color="#3737FF"
+                            height={100}
+                            width={100}
+                        />
+                    </div>
+                }
+                    {!err && !showLoader &&
                         <div className="center">
                                 <div className="center-child">
 
@@ -169,7 +182,7 @@ const Download = () => {
                             </div>
                     }
 
-                    {err === true &&
+                    {err === true && !showLoader &&
                         <div className="center">
                             <div className="center-child">
 
