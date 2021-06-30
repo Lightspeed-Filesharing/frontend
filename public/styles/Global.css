@@ -61,6 +61,10 @@ hr {
     border: 0px solid black;
 }
 
+.checkbox:active {
+    background-color: rgb(114, 114, 114)
+}
+
 .button {
     margin-top: 1rem;
     width: 85%;
