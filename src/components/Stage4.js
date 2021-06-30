@@ -15,7 +15,11 @@ const Stage4 = () => {
     useEffect(() => {
         console.log(state.response)
         setFullURL(`${window.origin}/${state.response.fileUuid}#${state.password}${state.salt}`)
-    }, [])
+    }, []);
+
+    const resetStage = () => {
+        dispatch({type: "SET_STAGE", payload: 1});
+    }
 
     return (
         <div className="bottom stage4">
@@ -37,6 +41,7 @@ const Stage4 = () => {
                             <button className="button create">Copy To Clipboard</button>
                         </CopyToClipboard>
                     </div>
+                    <button className="button create" onClick={resetStage}>Share New File</button>
                 </div>
             </div>
         </div>

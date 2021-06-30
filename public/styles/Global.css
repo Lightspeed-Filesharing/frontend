@@ -112,6 +112,7 @@ hr {
     justify-content: center;
     align-items: center;
     transition-duration: .3s;
+    user-select: none;
 }
 
 .circle:hover {
