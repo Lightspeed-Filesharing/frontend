@@ -1,5 +1,4 @@
 
-import { toHexString, fromHexString } from './conversion';
 import {generatePassword} from './generation';
 
 const {SodiumPlus} = require('sodium-plus');
@@ -12,6 +11,16 @@ export const createKeys = async (sodium) => { // Creates cryptography keys deriv
     const key = await sodium.crypto_pwhash(32, password, salt, sodium.CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE, sodium.CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE);
     console.log("Keys generated.");
     return [key, password, plainSalt];
+}
+
+export const deriveKeys = async (sodium, password, plainSalt) => {
+    let salt = new TextEncoder().encode(plainSalt);
+    console.log(`Password: ${password}\nSalt: ${plainSalt}`)
+
+    const key = await sodium.crypto_pwhash(32, password, salt, sodium.CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE, sodium.CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE);
+    console.log("Keys generated.");
+    return [key, password, plainSalt];
+
 }
 
 export const encrypt = async (sodium, unencryptedData, key, nonce=null) => { // Encrypts data using the keys and a randomly generated nonce.
