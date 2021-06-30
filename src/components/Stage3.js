@@ -36,6 +36,9 @@ const Stage3 = () => {
             const nameOutput = await encrypt(state.sodium, files[0].name, keys, output[1]);
             const hexName = await toHexString(nameOutput[0]);
 
+            const msgOutput = await encrypt(state.sodium, state.message, keys, output[1]);
+            const encryptedMsg = msgOutput[0];
+
             const encryptedData = output[0];
             console.log(encryptedData)
             const nonce = await toHexString(output[1]);
@@ -47,7 +50,10 @@ const Stage3 = () => {
             formData.append('filename', hexName)
             formData.append('data', encryptedData);
             formData.append('nonce', nonce);
-            // formData.append('settings', state.settings)
+            formData.append('message', encryptedMsg)
+            formData.append('longLink', state.settings.longLink)
+            formData.append('deleteOnOpen', state.settings.deleteOnOpen)
+            formData.append('limitDownloads', state.settings.limitDownloads)
 
             const response = await fetch(`${process.env.REACT_APP_API}/upload`, {
                 method: 'POST',

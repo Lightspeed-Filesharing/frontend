@@ -46,6 +46,11 @@ const Reducer = (state, action) => {
                 ...state,
                 response: action.payload
             }
+        case 'SET_MESSAGE':
+            return {
+                ...state,
+                message: action.payload
+            }
         default:
             return state;
     }

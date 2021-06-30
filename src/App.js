@@ -1,14 +1,11 @@
 import React, {Suspense} from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-// import Store from './components/Store';
-import Landing from './pages/Landing';
 import Store from './states/store';
 
+const Landing = React.lazy(() => import ("./pages/Landing.js"));
+const Download = React.lazy(() => import ("./pages/Download.js"));
+
 const App = () => {
-    // setTimeout(() => {
-    //     hideLoader();
-    //     hideOverlay();
-    // }, 1000)
     return (
         <Suspense fallback="Loading...">
             <Router>
@@ -16,7 +13,9 @@ const App = () => {
                     <div className="App">
                         <Switch>
                             <Route exact path="/"
-                                component={Landing}/>
+                                component={Landing} />
+                            <Route path="/:uuid"
+                                component={Download} />
                         </Switch>
                     </div>
                 </Store>

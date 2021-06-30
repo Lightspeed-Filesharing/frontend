@@ -13,6 +13,7 @@ const initialState = {
     response: null,
     password: null,
     salt: null,
+    message: null,
     error: null
 };
 
