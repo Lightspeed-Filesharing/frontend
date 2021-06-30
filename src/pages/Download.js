@@ -23,6 +23,7 @@ const Download = () => {
     const [metadata, setMetadata] = useState(null);
     const [sodium, setSodium] = useState(null);
     const [sodiumKeys, setKeys] = useState(null);
+    const [decryptedName, setName] = useState(null);
 
     const [err, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -57,8 +58,6 @@ const Download = () => {
                     setSodium(sodiumEngine);
                 }
 
-                // console.log(dataResponse.data)
-                // console.log(dataJSON)
                 const password = localKeySalt.substring(0, 16);
                 const plainSalt = localKeySalt.substring(localKeySalt.length - 16);
                 var derivedOutput;
@@ -73,7 +72,7 @@ const Download = () => {
                 setKeys(derivedOutput[0]);
                 const bufferName = await fromHexString(metadataJSON.filename);
                 const bufferNonce = await fromHexString(metadataJSON.nonce);
-                console.log(await decrypt(sodiumEngine, bufferName, bufferNonce, derivedOutput[0]))
+                setName(await decrypt(sodiumEngine, bufferName, bufferNonce, derivedOutput[0]))
             } else if (metadata.status === 404) {
                 console.error("File not found.");
                 setError(true);
@@ -97,23 +96,25 @@ const Download = () => {
         <>
             <div className="overlay">
                 <div className="overlay-child">
-                    {/* {err !== true &&
+                    {err !== true &&
                         <div className="center">
                                 <div className="center-child">
 
-                                    <div className="circle error">
+                                    {/* <div className="circle error">
                                         <FontAwesomeIcon icon={faTimes} size="2x" color="white" />
-                                    </div>
+                                    </div> */}
                                     <div className="titles error">
-                                        <p className="direction error">{errorMessage}</p>
-                                        <p className="direction small">{errorMessageSub}</p>
+                                        <p className="direction error">{decryptedName}</p>
+                                        <p className="direction small">You've been sent an encrypted file.</p>
                                     </div>
                                     <div className="buttons error">
-                                        <button className="button create error" onClick={() => {history.push('/')}}>Go Back Home</button>
+                                        <button className="button create decrypt" 
+                                        // onClick={}
+                                        >Decrypt and Download</button>
                                     </div>
                                 </div>
                             </div>
-                    } */}
+                    }
 
                     {err === true &&
                         <div className="center">
@@ -127,7 +128,7 @@ const Download = () => {
                                     <p className="direction small">{errorMessageSub}</p>
                                 </div>
                                 <div className="buttons error">
-                                    <button className="button create error" onClick={() => {history.push('/')}}>Go Back Home</button>
+                                    <button className="button create decrypt" onClick={() => {history.push('/')}}>Go Back Home</button>
                                 </div>
                             </div>
                         </div>

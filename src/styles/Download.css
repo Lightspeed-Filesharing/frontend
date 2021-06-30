@@ -68,8 +68,18 @@ body {
 
 .titles.error {
     text-align: center;
+    margin: 0;
+}
+
+.buttons.error {
+    display: flex;
+    justify-content: center;
 }
 
 .button.create.error {
     width: 10rem;
+}
+
+.button.create.decrypt {
+    width: 15rem;
 }
