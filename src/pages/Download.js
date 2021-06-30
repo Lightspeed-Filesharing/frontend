@@ -12,7 +12,7 @@ import wave from '../wave.svg';
 import {deriveKeys, decrypt} from "../utils/encryption";
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faTimes, faFile} from '@fortawesome/free-solid-svg-icons';
 
 const {SodiumPlus} = require('sodium-plus');
 
@@ -27,6 +27,7 @@ const Download = () => {
     const [sodiumKeys, setKeys] = useState(null);
     const [decryptedName, setName] = useState(null);
     const [decryptedType, setType] = useState(null);
+    const [decryptedMessage, setMessage] = useState(null);
 
     const [err, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -76,8 +77,15 @@ const Download = () => {
                 const bufferName = await fromHexString(metadataJSON.filename);
                 const bufferNonce = await fromHexString(metadataJSON.nonce);
                 const bufferType = await fromHexString(metadataJSON.type);
+                const bufferMessage = await fromHexString(metadataJSON.message);
                 setName(await decrypt(sodiumEngine, bufferName, bufferNonce, derivedOutput[0]));
                 setType(await decrypt(sodiumEngine, bufferType, bufferNonce, derivedOutput[0]));
+                const readableMessage = await decrypt(sodiumEngine, bufferMessage, bufferNonce, derivedOutput[0]);
+                if (readableMessage) {
+                    setMessage(readableMessage);
+                } else {
+                    setMessage(false);
+                }
             } else if (metadata.status === 404) {
                 console.error("File not found.");
                 setError(true);
@@ -126,18 +134,26 @@ const Download = () => {
                         <div className="center">
                                 <div className="center-child">
 
-                                    {/* <div className="circle error">
-                                        <FontAwesomeIcon icon={faTimes} size="2x" color="white" />
-                                    </div> */}
+                                    <div className="circle file">
+                                        <FontAwesomeIcon icon={faFile} size="2x" color="white" />
+                                    </div>
                                     <div className="titles error">
                                         <p className="direction error">{decryptedName}</p>
                                         <p className="direction small">You've been sent an encrypted file.</p>
                                     </div>
+
                                     <div className="buttons error">
                                         <button className="button create decrypt" 
                                         onClick={async () => {handleDecrypt()}}
                                         >Decrypt and Download</button>
                                     </div>
+                                    {decryptedMessage !== false &&
+                                    <div className="titles error">
+
+                                        <p className="direction error">Message from Sender</p>
+                                        <p className="direction small">{decryptedMessage}</p>
+                                    </div>
+                                    }
                                 </div>
                             </div>
                     }

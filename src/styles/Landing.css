@@ -101,6 +101,10 @@
     text-align: center;
 }
 
+.circle:active {
+    background-color: rgb(7, 7, 126);
+}
+
 @media only screen and (max-width: 800px) {
     .wrapper {
         flex-direction: column-reverse;

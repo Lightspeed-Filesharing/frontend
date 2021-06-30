@@ -83,3 +83,15 @@ body {
 .button.create.decrypt {
     width: 15rem;
 }
+
+.button.create.decrypt:active {
+    background-color: rgb(17, 7, 107);
+}
+
+.circle.file {
+    background-color: #3737FF;
+}
+
+.circle.file:hover {
+    cursor: default;
+}
