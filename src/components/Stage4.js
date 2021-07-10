@@ -11,10 +11,11 @@ const Stage4 = () => {
     const [state, dispatch] = useContext(Context);
 
     const [fullURL, setFullURL] = useState(null);
+    const [deleteURL, setDeleteURL] = useState(null);
 
     useEffect(() => {
-        console.log(state.response)
         setFullURL(`${window.origin}/${state.response.fileUuid}#${state.password}${state.salt}`)
+        setDeleteURL(`${process.env.REACT_APP_API}/delete/${state.response.deletionUuid}`);
     }, []);
 
     const resetStage = () => {
@@ -36,9 +37,13 @@ const Stage4 = () => {
                     <p className="direction" style={{textAlign: 'center'}}>Your file is ready to be securely shared.</p>
                     <p className="direction small">Copy your link below.</p>
                     <input className="input stage4" disabled={true} value={fullURL}/>
+                    <input className="input stage4" disabled={true} value={deleteURL}/>
                     <div className="buttons stage4">
                         <CopyToClipboard text={fullURL}>
-                            <button className="button create">Copy To Clipboard</button>
+                            <button className="button create">Copy Download Link To Clipboard</button>
+                        </CopyToClipboard>
+                        <CopyToClipboard text={deleteURL}>
+                            <button className="button create">Copy Delete Link To Clipboard</button>
                         </CopyToClipboard>
                     </div>
                     <button className="button create" onClick={resetStage}>Share New File</button>
