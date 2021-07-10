@@ -37,15 +37,13 @@ const Stage4 = () => {
                     <p className="direction" style={{textAlign: 'center'}}>Your file is ready to be securely shared.</p>
                     <p className="direction small">Copy your link below.</p>
                     <input className="input stage4" disabled={true} value={fullURL}/>
+                    <CopyToClipboard text={fullURL}>
+                        <button className="button create">Copy Download Link To Clipboard</button>
+                    </CopyToClipboard>
                     <input className="input stage4" disabled={true} value={deleteURL}/>
-                    <div className="buttons stage4">
-                        <CopyToClipboard text={fullURL}>
-                            <button className="button create">Copy Download Link To Clipboard</button>
-                        </CopyToClipboard>
-                        <CopyToClipboard text={deleteURL}>
-                            <button className="button create">Copy Delete Link To Clipboard</button>
-                        </CopyToClipboard>
-                    </div>
+                    <CopyToClipboard text={deleteURL}>
+                        <button className="button create">Copy Delete Link To Clipboard</button>
+                    </CopyToClipboard>
                     <button className="button create" onClick={resetStage}>Share New File</button>
                 </div>
             </div>
