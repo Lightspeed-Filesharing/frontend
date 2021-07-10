@@ -49,8 +49,9 @@ const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
                     <div className="dropzone">
                         <div class="top">
                             <div className="titles dropzone">
-                                <h1 className="title dropzone">Add your file.</h1>
-                                <h2 className="subtitle dropzone">Your files will be secured with<br></br>end-to-end encryption.</h2>
+                                {/* <div className="logobackground" style={{backgroundColor: "#fff", borderRadius: "40px"}}>
+                                    <img src="/assets/logo/lightspeed512.png" className="logo"/>
+                                </div> */}
                             </div>
                         </div>
                         {state.stage === 1 && <Stage1 />}
@@ -62,6 +63,7 @@ const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
                 <div className="emptyright">
                     <div className="center">
                         <div className="titles slide">
+                            <img src="/assets/logo/lightspeed512.png" className="logo" draggable="false" />
                             <h1 className="title slide">Welcome to <span className="blue">Lightspeed</span>.</h1>
                             <h2 className="subtitle slide">Your <span className="blue">{slideText}</span> file-sharing companion.</h2>
                         </div>
