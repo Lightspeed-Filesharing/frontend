@@ -80,7 +80,7 @@ const Stage1 = () => {
                 </IconGroup>
                 <div className="textgroup">
                     <Direction>Drag and drop or click to select.</Direction>
-                    <DirectionSmall>Max Size: 100 MB</DirectionSmall>
+                    <DirectionSmall>Max Size: {process.env.REACT_APP_SIZELIMIT} MB</DirectionSmall>
                 </div>
                 <input 
                     type="file" 
