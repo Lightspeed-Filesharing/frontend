@@ -23,19 +23,6 @@
   margin-top: 0.5rem;
 }
 
-.bottom {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.plus {
-  color: white;
-  font-size: 3rem;
-}
-
-
 .blue {
   color: #3737ff;
   font-weight: 600;
@@ -45,9 +32,6 @@
   text-align: center;
 }
 
-.circle:active {
-  background-color: rgb(7, 7, 126);
-}
 
 @media only screen and (max-width: 800px) {
   .titles.slide {

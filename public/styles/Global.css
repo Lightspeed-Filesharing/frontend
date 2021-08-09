@@ -109,36 +109,6 @@ hr {
     background-color: rgb(0, 0, 185);
 }
 
-.circle {
-    height: 5rem;
-    width: 5rem;
-    border-radius: 50%;
-    background: #3737FF;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition-duration: 0.3s;
-    user-select: none;
-}
-
-.circle:hover {
-    cursor: pointer;
-    background: #5555ff;
-}
-
-.direction {
-    margin-bottom: 0;
-    margin-top: 0.25rem;
-    font-family: Rubik;
-}
-
-.direction.small {
-    font-size: 0.9rem;
-    color: grey;
-    text-align: center;
-    margin-top: 0;
-}
-
 a {
     text-decoration: none;
     text-decoration-color: none;

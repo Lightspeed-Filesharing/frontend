@@ -16,6 +16,8 @@ import {faCode, faUserCircle} from '@fortawesome/free-solid-svg-icons';
 
 import styled from 'styled-components';
 
+import IconGroup from '../Styled/IconGroup';
+
 // Styled Components
 
 const Wrapper = styled.div`
@@ -87,13 +89,6 @@ const EmptyRight = styled.div`
     }
 `
 
-const IconGroup = styled.div`
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-`
-
 // Component
 const {SodiumPlus} = require('sodium-plus');
 
@@ -147,7 +142,7 @@ const Landing = () => { // const [cycleIndex, setCycleIndex] = useState(0)
                         </div>
                         <IconGroup>
                             <a className="link" href="https://github.com/Lightspeed-Filesharing" target="_blank" rel="noopener noreferrer">
-                                <FontAwesomeIcon icon={faCode} size="2x" />\
+                                <FontAwesomeIcon icon={faCode} size="2x" />
                             </a>
                             <a className="link" href="https://httpjames.space" target="_blank">
                                 <FontAwesomeIcon icon={faUserCircle} size="2x" />
