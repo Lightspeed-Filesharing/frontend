@@ -11,9 +11,11 @@ import {
     DirectionSmall,
 } from '../Styled/Direction';
 
+import Bottom from '../Styled/Bottom';
+
 // Styled Components
 
-const Bottom = styled(FileDrop)`
+const BottomFile = styled(FileDrop)`
     height: 100%;
     display: flex;
     justify-content: center;
@@ -67,7 +69,7 @@ const Stage1 = () => {
     }
     
     return (
-        <Bottom 
+        <BottomFile 
             onDrop={async (files, e) => {e.preventDefault(); handleFile(files)}}
         >
             <div class="center">
@@ -87,7 +89,7 @@ const Stage1 = () => {
                     ref={hiddenFileInput}
                     onChange={async (e) => {handleInputChange(e)}} />
             </div>
-        </Bottom>
+        </BottomFile>
 
     )
 }

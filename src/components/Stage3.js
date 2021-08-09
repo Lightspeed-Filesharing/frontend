@@ -1,11 +1,20 @@
 import React, {useState, useContext, useLayoutEffect} from 'react';
 import {Context} from '../states/store';
-import styles from '../styles/Landing.css';
+import '../styles/Landing.css';
 import {createKeys, decrypt, encrypt} from '../utils/encryption';
 import { toHexString, fromHexString } from '../utils/conversion';
 
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+
+import Bottom from '../Styled/Bottom';
+
+import IconGroup from '../Styled/IconGroup';
+
+import {
+    Direction,
+    DirectionSmall
+} from '../Styled/Direction';
 
 const Stage3 = () => {
     const [state, dispatch] = useContext(Context);
@@ -30,7 +39,6 @@ const Stage3 = () => {
         } else {
             keys = state.key;
         }
-        console.log(keys)
         const reader = new FileReader();
         reader.onload = async function (e) {
             var data = e.target.result;
@@ -77,7 +85,6 @@ const Stage3 = () => {
                 return;
             }
 
-            console.log(response)
             const responseJSON = await response.json();
             if (response.status === 200) {
                 dispatch({type: "SET_RESPONSE", payload: responseJSON.data});
@@ -103,22 +110,22 @@ const Stage3 = () => {
     }, [])
 
     return (
-        <div className="bottom">
+        <Bottom>
             <div class="center">
-                <div className="icongroup">
+                <IconGroup>
                     <Loader
                         type="Oval"
                         color="#3737FF"
                         height={100}
                         width={100}
                     />
-                </div>
+                </IconGroup>
                 <div className="textgroup">
-                    <p className="direction" style={{textAlign: "center"}}>{loadingText}</p>
-                    <p className="direction small">Please wait.</p>
+                    <Direction style={{textAlign: "center"}}>{loadingText}</Direction>
+                    <DirectionSmall>Please wait.</DirectionSmall>
                 </div>
             </div>
-        </div>
+        </Bottom>
     )
 
 
