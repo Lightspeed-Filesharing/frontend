@@ -7,6 +7,24 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 
+import Bottom from '../Styled/Bottom';
+
+import styled from 'styled-components';
+
+import IconGroup from '../Styled/IconGroup';
+
+// Styled Components
+
+const BottomStage4 = styled(Bottom)`
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+// Components
+
 const Stage4 = () => {
     const [state, dispatch] = useContext(Context);
 
@@ -23,16 +41,16 @@ const Stage4 = () => {
     }
 
     return (
-        <div className="bottom stage4">
+        <BottomStage4>
             <div className="bottom-child">
                 <div className="titles stage2">
                     <h1 className="title stage4">File Uploaded</h1>
                     {/* <h2 className="subtitle stage2"></h2> */} </div>
-                <div className="icongroup">
+                <IconGroup>
                     <div className="circle stage4">
                         <FontAwesomeIcon size="lg" icon={faCheck}/>
                     </div>
-                </div>
+                </IconGroup>
                 <div className="center stage4">
                     <p className="direction" style={{textAlign: 'center'}}>Your file is ready to be securely shared.</p>
                     <p className="direction small">Copy your link below.</p>
@@ -47,7 +65,7 @@ const Stage4 = () => {
                     <button className="button create" onClick={resetStage}>Share New File</button>
                 </div>
             </div>
-        </div>
+        </BottomStage4>
 
     )
 }
