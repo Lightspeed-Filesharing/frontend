@@ -1,45 +1,43 @@
 .titles.dropzone {
-  height: auto;
-  line-height: 1;
-  margin-top: 1.5rem;
-  margin-right: 0.5rem;
-  margin-left: 0.5rem;
+    height: auto;
+    line-height: 1;
+    margin-top: 1.5rem;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
 }
 
 .title.dropzone,
 .subtitle.dropzone {
-  color: white;
-  margin: 0;
-  font-weight: lighter;
+    color: white;
+    margin: 0;
+    font-weight: lighter;
 }
 
 .title.dropzone {
-  font-size: 3rem;
-  /* font-weight: 600; */
-  letter-spacing: 1.5px;
+    font-size: 3rem;
+    /* font-weight: 600; */
+    letter-spacing: 1.5px;
 }
 
 .subtitle.dropzone {
-  margin-top: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .blue {
-  color: #3737ff;
-  font-weight: 600;
+    color: #3737ff;
+    font-weight: 600;
 }
 
 .titles.slide {
-  text-align: center;
+    text-align: center;
 }
 
-
 @media only screen and (max-width: 800px) {
-  .titles.slide {
-    margin: 0;
-  }
+    .titles.slide {
+        margin: 0;
+    }
 
-
-  .title.slide {
-    margin: 0;
-  }
+    .title.slide {
+        margin: 0;
+    }
 }

@@ -7,7 +7,7 @@ body {
 .top {
     width: 100%;
     height: 50%;
-    background-color: #3737FF;
+    background-color: #3737ff;
 }
 
 .waves {
@@ -89,7 +89,7 @@ body {
 }
 
 .circle.file {
-    background-color: #3737FF;
+    background-color: #3737ff;
 }
 
 .circle.file:hover {
@@ -113,6 +113,6 @@ body {
 
 .direction.warning {
     background: transparent;
-    color: white;   
+    color: white;
     text-align: center;
 }
